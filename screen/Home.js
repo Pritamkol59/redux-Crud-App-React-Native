@@ -8,21 +8,28 @@ import React, { useEffect, useState } from 'react';
 import { deleteProduct } from '../Redux/actions/productActions';
 import FullScreenChz from 'react-native-fullscreen-chz';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Nav from './Nav';
 import { useNavigation } from '@react-navigation/native';
+
+
+
 
 
 const Home = () => {
 
   const navigation = useNavigation();
   const [products, setProducts] = useState([]);
+  
   const dispatch = useDispatch();
   
 
 
   useEffect(() => {
     FullScreenChz.enable();
-    const unsubscribe = firebase
+
+    
+    /*const unsubscribe = firebase
       .firestore()
       .collection('products')
       .onSnapshot(querySnapshot => {
@@ -32,7 +39,28 @@ const Home = () => {
         });
         setProducts(data);
       });
-    return () => unsubscribe();
+    return () => unsubscribe();*/
+      //console.log(tok);
+
+      const fetchData = async () => {
+
+        const tok = await AsyncStorage.getItem('token');
+
+        const unsubscribe = firebase
+          .firestore()
+          .collection('products')
+          .where("uid", "==", tok)
+          .onSnapshot(querySnapshot => {
+            let data = [];
+            querySnapshot.forEach(doc => {
+              data.push({ ...doc.data(), id: doc.id });
+            });
+            setProducts(data);
+          });
+        return unsubscribe;
+      };
+    
+      fetchData();
 
     
   

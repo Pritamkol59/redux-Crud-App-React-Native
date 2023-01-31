@@ -42,6 +42,8 @@ const Edite = () => {
 
 const handleSubmit = async () => {
 
+  const uid = await AsyncStorage.getItem('token');
+
   if(productName!='' && productPrice!='' && productDiscountedPrice!='' && image!=''){
 
     try {
@@ -62,6 +64,7 @@ const handleSubmit = async () => {
             productName,
             productPrice,
             productDiscountedPrice,
+            uid,
             image: url
         }))
         setProductAdded(true);
