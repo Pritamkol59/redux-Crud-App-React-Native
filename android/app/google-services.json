@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "543104985566",
+    "project_id": "ecrud-73163",
+    "storage_bucket": "ecrud-73163.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543104985566:android:3bd32633e1862780a2554f",
+        "android_client_info": {
+          "package_name": "com.ecrud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543104985566-5v8mq2lpqm0kiehd3h41kukjf9s5o25o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ecrud",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "543104985566-d38iv6u019k0c8gbndfaoiv14slm8rde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeuM_-gp2VUoI5i2sS_TqnNan8YY8Domc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543104985566-d38iv6u019k0c8gbndfaoiv14slm8rde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
