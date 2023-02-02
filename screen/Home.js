@@ -44,7 +44,7 @@ const Home = () => {
 
       const fetchData = async () => {
 
-        const tok = await AsyncStorage.getItem('token');
+        const tok = await AsyncStorage.getItem('email');
 
         const unsubscribe = firebase
           .firestore()

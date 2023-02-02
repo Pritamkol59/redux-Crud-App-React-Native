@@ -48,7 +48,7 @@ const Profile = () => {
 
     try {
       await AsyncStorage.removeItem('token');
-      //await AsyncStorage.removeItem('number');
+      await AsyncStorage.removeItem('email');
      console.log("Done");
      navigation.replace('Login');
 

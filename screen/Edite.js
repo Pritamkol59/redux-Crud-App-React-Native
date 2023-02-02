@@ -1,4 +1,4 @@
-import { View, Text ,Button,StyleSheet,TextInput,Alert, FlatList, TouchableOpacity,Image} from 'react-native'
+import { View, Text ,Button,StyleSheet,TextInput,Alert, FlatList, TouchableOpacity,Image,ActivityIndicator} from 'react-native'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { addProduct } from '../Redux/actions/productActions';
@@ -22,6 +22,9 @@ const Edite = () => {
   const [imageName, setImageName] = useState('');
   const [error, setError] = useState('');
   const [productAdded, setProductAdded] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
 
   const dispatch = useDispatch();
 
@@ -42,51 +45,69 @@ const Edite = () => {
 
 const handleSubmit = async () => {
 
-  const uid = await AsyncStorage.getItem('token');
+
+
+  const uid = await AsyncStorage.getItem('email');
 
   if(productName!='' && productPrice!='' && productDiscountedPrice!='' && image!=''){
 
-    try {
-      console.log(image);
-       
-        
-        
-        const imageRef = storage().ref("product_images/"+imageName)
-        await imageRef.putFile(image, { contentType: 'image/jpg'}).catch((error) => { throw error })
-        const url = await imageRef.getDownloadURL().catch((error) => { throw error });
+    if(productDiscountedPrice>productPrice){
+
+      Alert.alert('Sorry Product Discounted Price Should not grater');
+
+    }
+    else{
+
+      setLoading(true);
+
+      try {
+        console.log(image);
+         
+          
+          
+          const imageRef = storage().ref("product_images/"+imageName)
+          await imageRef.putFile(image, { contentType: 'image/jpg'}).catch((error) => { throw error })
+          const url = await imageRef.getDownloadURL().catch((error) => { throw error });
+    
+     
+    console.log(url);
+    
+          if(url){
+    
+            await dispatch(addProduct({
+              productName,
+              productPrice,
+              productDiscountedPrice,
+              uid,
+              image: url
+          }))
+          setProductAdded(true);
+          setError('');
+
+          setLoading(false);
+          Alert.alert('Product added successfully');
   
-   
-  console.log(url);
-  
-        if(url){
-  
-          await dispatch(addProduct({
-            productName,
-            productPrice,
-            productDiscountedPrice,
-            uid,
-            image: url
-        }))
-        setProductAdded(true);
-        setError('');
-        Alert.alert('Product added successfully');
+    
+          }
+    
+         else{
+    
+          console.log("Error from");
+         }
+    
+    
+      } 
+      
+      catch (err) {
+        console.log(err);
+          setError(err.message);
+          setProductAdded(false);
+      }
+
+    }
+
 
   
-        }
-  
-       else{
-  
-        console.log("Error from");
-       }
-  
-  
-    } 
-    
-    catch (err) {
-      console.log(err);
-        setError(err.message);
-        setProductAdded(false);
-    }
 
   }
 
@@ -151,7 +172,7 @@ const handleSubmit = async () => {
 
 
 
-<View style={{marginTop:'50%', width:'94%',alignItems:'center', height:350, backgroundColor:'#fff', alignSelf:'center',marginTop:10,borderRadius:10,elevation:1,flexDirection:'column'}}>
+{!loading?<View style={{marginTop:'50%', width:'94%',alignItems:'center', height:350, backgroundColor:'#fff', alignSelf:'center',marginTop:10,borderRadius:10,elevation:1,flexDirection:'column'}}>
             <Text>Product Name:</Text>
             <TextInput
               style={styles.formInput}
@@ -186,7 +207,7 @@ const handleSubmit = async () => {
 
             {error !== '' && <Text>{error}</Text>}
             {productAdded && <Text>You Can Now Add More Product</Text>}
-        </View>
+        </View>: <ActivityIndicator size="large" color="#0000ff" /> }
 
 
 

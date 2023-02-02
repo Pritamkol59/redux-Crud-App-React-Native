@@ -73,7 +73,7 @@ const Login = () => {
 
       //set AsyncStorage
 
-      const items = [['token', uid]];
+      const items = [['token', uid],['email', email]];
 
         AsyncStorage.multiSet(items, () => {
            

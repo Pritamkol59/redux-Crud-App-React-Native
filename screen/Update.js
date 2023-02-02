@@ -68,36 +68,48 @@ const handleSubmit = async () => {
 
   if(productName!='' && productPrice!='' && productDiscountedPrice!='' && image!=''){
 
-  if(imageNew==true){
+    if(productDiscountedPrice>productPrice){
 
-    const product = {
-      productName: productName,
-      productPrice: productPrice,
-      productDiscountedPrice:productDiscountedPrice,
-      imageName:imageName,
-  
-      image: image,
-    };
+      Alert.alert('Sorry Product Discounted Price Should not grater');
 
-    dispatch(updateProduct(productId, product));
+    }
 
-  }
+    else{
 
-  else{
+      if(imageNew==true){
 
-    const product = {
-      productName: productName,
-      productPrice: productPrice,
-      productDiscountedPrice:productDiscountedPrice,
+        const product = {
+          productName: productName,
+          productPrice: productPrice,
+          productDiscountedPrice:productDiscountedPrice,
+          imageName:imageName,
       
-    };
-    dispatch(updateProduct(productId, product));
+          image: image,
+        };
+    
+        dispatch(updateProduct(productId, product));
+    
+      }
+    
+      else{
+    
+        const product = {
+          productName: productName,
+          productPrice: productPrice,
+          productDiscountedPrice:productDiscountedPrice,
+          
+        };
+        dispatch(updateProduct(productId, product));
+    
+      }
+      
+      
+      Alert.alert('Product updated successfully');
+      navigation.replace('Home');
 
-  }
+    }
+
   
-  
-  Alert.alert('Product updated successfully');
-  navigation.replace('Home');
   
 }
 
